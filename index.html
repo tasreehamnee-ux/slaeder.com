@@ -3,25 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قسم التصاريح الأمنية - وزارة الشباب والرياضة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>معرض الصور الديناميكي - Imgur</title>
     <style>
-        :root {
-            --primary-blue: #1e3a5f;
-            --primary-green: #0d7377;
-            --accent-gold: #d4a843;
-            --accent-gold-light: #e8c96a;
-            --bg-cream: #f5f0e8;
-            --bg-white: #ffffff;
-            --text-dark: #1a1a2e;
-            --text-muted: #6b7280;
-            --shadow-soft: 0 10px 40px rgba(30, 58, 95, 0.15);
-            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --gradient-hero: linear-gradient(135deg, #1e3a5f 0%, #0d7377 50%, #14919b 100%);
-            --gradient-footer: linear-gradient(135deg, #1e3a5f 0%, #0d7377 100%);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -29,1555 +12,1360 @@
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-cream);
-            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
             overflow-x: hidden;
         }
 
-        /* ===== TOP BAR ===== */
-        .top-bar {
-            background: var(--gradient-hero);
-            padding: 8px 0;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.9);
-            position: relative;
-            z-index: 100;
-        }
-
-        .top-bar::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg,
-                rgba(212,168,67,0) 0%,
-                rgba(212,168,67,0.8) 50%,
-                rgba(212,168,67,0) 100%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .top-bar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .top-bar span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .top-bar i {
-            font-size: 0.9rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); }
-        }
-
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            background: linear-gradient(135deg,
-                rgba(30, 58, 95, 0.95) 0%,
-                rgba(13, 115, 119, 0.95) 50%,
-                rgba(20, 145, 155, 0.95) 100%);
-            backdrop-filter: blur(10px);
-            padding: 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 8px 32px rgba(30, 58, 95, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(212, 168, 67, 0.2);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 0;
-        }
-
-        .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #d4a843 0%, #e8c96a 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-size: 1.3rem;
-            box-shadow: 0 10px 30px rgba(212, 168, 67, 0.4),
-                        inset -2px -2px 5px rgba(0, 0, 0, 0.1),
-                        inset 2px 2px 5px rgba(255, 255, 255, 0.3);
-            animation: rotate-icon 6s linear infinite;
-            position: relative;
-        }
-
-        @keyframes rotate-icon {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        .logo-text {
+        /* زر فتح لوحة التحكم */
+        .admin-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #e94560;
             color: white;
-        }
-
-        .logo-text h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 0;
-            line-height: 1.2;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo-text span {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 0;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 25px 20px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #d4a843, transparent);
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            transform: scaleX(1);
-        }
-
-        .nav-link:hover {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-        }
-
-        .nav-link i.fa-chevron-down {
-            font-size: 0.7rem;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-item:hover .nav-link i.fa-chevron-down {
-            transform: rotate(180deg);
-        }
-
-        /* Dropdown */
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            min-width: 380px;
-            border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(30, 58, 95, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-20px) scale(0.9);
-            transition: all 0.3s ease;
-            overflow: hidden;
-            border: 1px solid rgba(212, 168, 67, 0.2);
-            margin-top: 10px;
-        }
-
-        .nav-item:hover .dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
-            color: var(--text-dark);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-            border-bottom: 1px solid rgba(0,0,0,0.03);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dropdown-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, #d4a843, #e8c96a);
-            transform: scaleY(0);
-            transform-origin: center;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown-item:hover::before {
-            transform: scaleY(1);
-        }
-
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-item:hover {
-            background: linear-gradient(90deg, rgba(212, 168, 67, 0.05), rgba(212, 168, 67, 0.15));
-            color: var(--primary-green);
-            padding-right: 25px;
-        }
-
-        .dropdown-item i {
-            color: var(--accent-gold);
-            width: 20px;
-            text-align: center;
-        }
-
-        .dropdown-item .link-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-right: auto;
-            margin-left: 0;
-            white-space: nowrap;
-        }
-
-        .dropdown-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.3), transparent);
-            margin: 5px 0;
-        }
-
-        .dropdown-header {
-            padding: 10px 18px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-toggle {
-            display: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            background: linear-gradient(135deg, #1e3a5f 0%, #0d7377 50%, #14919b 100%);
-            padding: 80px 20px 120px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 60%);
-            animation: pulse-3d 8s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at 20% 50%, rgba(212, 168, 67, 0.1) 0%, transparent 40%),
-                        radial-gradient(ellipse at 80% 80%, rgba(13, 115, 119, 0.1) 0%, transparent 40%);
-            animation: shift-light 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse-3d {
-            0%, 100% { transform: scale(1) translateZ(0); opacity: 0.5; }
-            50% { transform: scale(1.15) translateZ(0); opacity: 0.8; }
-        }
-
-        @keyframes shift-light {
-            0%, 100% { transform: translateX(0px) translateY(0px); }
-            50% { transform: translateX(20px) translateY(-20px); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            backdrop-filter: blur(20px);
-            padding: 12px 24px;
-            border-radius: 50px;
-            color: var(--accent-gold-light);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            border: 2px solid rgba(212, 168, 67, 0.4);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            animation: float-badge 3s ease-in-out infinite;
-        }
-
-        @keyframes float-badge {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .hero-badge i {
-            color: var(--accent-gold);
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hero h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: white;
-            line-height: 1.4;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3),
-                         -2px -2px 5px rgba(255,255,255,0.1);
-            animation: slide-in 0.8s ease-out;
-        }
-
-        @keyframes slide-in {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h2 .highlight {
-            color: var(--accent-gold-light);
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero h2 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #d4a843, transparent);
-            animation: underline 2s ease-in-out infinite;
-        }
-
-        @keyframes underline {
-            0%, 100% { opacity: 0.5; width: 100%; }
-            50% { opacity: 1; width: 120%; }
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.85);
-            max-width: 600px;
-            margin: 0 auto 35px;
-            line-height: 1.8;
-            animation: fade-in-delay 1s ease-out 0.2s both;
-        }
-
-        @keyframes fade-in-delay {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fade-in-delay 1s ease-out 0.4s both;
-        }
-
-        .btn {
-            padding: 14px 32px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             border: none;
-            font-family: 'Cairo', sans-serif;
-            position: relative;
-            overflow: hidden;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #d4a843 0%, #e8c96a 100%);
-            color: var(--primary-blue);
-            box-shadow: 0 10px 30px rgba(212, 168, 67, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                        inset 0 -3px 8px rgba(0, 0, 0, 0.1);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #e8c96a 0%, #f0d48e 100%);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 40px rgba(212, 168, 67, 0.5),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-outline {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: rgba(212, 168, 67, 0.5);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        /* ===== STATS BAR ===== */
-        .stats-bar {
-            max-width: 900px;
-            margin: -60px auto 0;
-            position: relative;
-            z-index: 10;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-            border-radius: 20px;
-            padding: 35px 40px;
-            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.25),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(212, 168, 67, 0.15);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-item {
-            position: relative;
-            animation: stat-pop 0.6s ease-out;
-        }
-
-        @keyframes stat-pop {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .stat-item:nth-child(1) { animation-delay: 0.1s; }
-        .stat-item:nth-child(2) { animation-delay: 0.2s; }
-        .stat-item:nth-child(3) { animation-delay: 0.3s; }
-        .stat-item:nth-child(4) { animation-delay: 0.4s; }
-
-        .stat-item:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, transparent, rgba(212, 168, 67, 0.3), transparent);
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #1e3a5f, #0d7377);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: block;
-            line-height: 1;
-            text-shadow: 0 2px 10px rgba(30, 58, 95, 0.1);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        /* ===== SECTIONS ===== */
-        .section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fade-in 0.8s ease-out;
-        }
-
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-tag {
-            display: inline-block;
-            color: var(--primary-green);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .section-tag::before {
-            content: '—';
-            margin-left: 8px;
-            color: var(--accent-gold);
-            animation: pulse-line 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-line {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #1e3a5f, #0d7377, #d4a843);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-        }
-
-        .section-desc {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        /* ===== DEPARTMENTS GRID - NEW LAYOUT ===== */
-        .depts-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .depts-row {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .dept-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 240, 232, 0.5));
-            border-radius: 20px;
-            padding: 35px 30px;
-            box-shadow: 0 10px 40px rgba(30, 58, 95, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(212, 168, 67, 0.1);
-            backdrop-filter: blur(10px);
-            animation: card-appear 0.6s ease-out;
-            text-align: center;
-            min-width: 220px;
-            flex: 1;
-            max-width: 320px;
-        }
-
-        /* Special styling for follow-up department (center top) */
-        .dept-card.follow-up-dept {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(231, 76, 60, 0.08));
-            border: 2px solid rgba(231, 76, 60, 0.3);
+        .admin-toggle:hover {
+            background: #c73e54;
             transform: scale(1.05);
-            box-shadow: 0 15px 50px rgba(231, 76, 60, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
-        .dept-card.follow-up-dept:hover {
-            transform: scale(1.08) translateY(-8px);
-            border-color: rgba(231, 76, 60, 0.5);
-            box-shadow: 0 25px 60px rgba(231, 76, 60, 0.25),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        }
-
-        /* Logo image styling for follow-up department */
-        .dept-card.follow-up-dept .dept-logo-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
-            object-fit: contain;
-            margin: 0 auto 15px auto;
-            display: block;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
-            transition: all 0.3s ease;
-        }
-
-        .dept-card.follow-up-dept:hover .dept-logo-img {
-            transform: scale(1.1) rotate(-3deg);
-            filter: drop-shadow(0 8px 20px rgba(231, 76, 60, 0.3));
-        }
-
-        .dept-card.follow-up-dept .dept-line {
-            background: linear-gradient(90deg, #e74c3c, #c0392b);
-            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .dept-card.follow-up-dept:hover .dept-line {
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
-        }
-
-        @keyframes card-appear {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .dept-card:nth-child(1) { animation-delay: 0.1s; }
-        .dept-card:nth-child(2) { animation-delay: 0.2s; }
-        .dept-card:nth-child(3) { animation-delay: 0.3s; }
-        .dept-card:nth-child(4) { animation-delay: 0.4s; }
-
-        .dept-card::before {
-            content: '';
-            position: absolute;
+        /* لوحة التحكم المخفية */
+        .admin-panel {
+            position: fixed;
             top: 0;
-            right: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, #d4a843, transparent);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s ease;
+            left: -480px;
+            width: 480px;
+            height: 100vh;
+            background: #16213e;
+            z-index: 1000;
+            padding: 80px 25px 25px;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 5px 0 30px rgba(0,0,0,0.5);
+            overflow-y: auto;
         }
 
-        .dept-card::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            right: -100%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(212, 168, 67, 0.1), transparent);
-            border-radius: 50%;
-            transition: all 0.6s ease;
-        }
-
-        .dept-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(30, 58, 95, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(212, 168, 67, 0.05));
-        }
-
-        .dept-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .dept-card:hover::after {
-            top: -50%;
-            right: -50%;
-        }
-
-        .dept-icon {
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #1e3a5f, #0d7377);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            margin: 0 auto 20px auto;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .dept-card:hover .dept-icon {
-            background: linear-gradient(135deg, #d4a843, #e8c96a);
-            color: var(--primary-blue);
-            transform: rotate(-5deg) scale(1.15);
-            box-shadow: 0 12px 30px rgba(212, 168, 67, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .dept-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .dept-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .dept-line {
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, #d4a843, #e8c96a);
-            margin: 20px auto 0 auto;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(212, 168, 67, 0.3);
-        }
-
-        .dept-card:hover .dept-line {
-            width: 80px;
-            box-shadow: 0 4px 12px rgba(212, 168, 67, 0.4);
-        }
-
-        /* ===== SERVICES GRID ===== */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(30, 58, 95, 0.02));
-            border-radius: 16px;
-            padding: 25px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.08),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: var(--text-dark);
-            border: 1px solid rgba(212, 168, 67, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
+        .admin-panel.active {
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(212, 168, 67, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .service-card:hover {
-            transform: translateX(-8px);
-            box-shadow: 0 15px 40px rgba(30, 58, 95, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            border-color: var(--accent-gold);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(212, 168, 67, 0.1));
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-info i {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .service-info span {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .service-icon {
-            width: 45px;
-            height: 45px;
-            background: transparent;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-gold);
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-card:hover .service-icon {
-            color: var(--primary-green);
-            transform: scale(1.15) rotate(15deg);
-        }
-
-        /* ===== CONTACT SECTION ===== */
-        .contact-section {
-            background: linear-gradient(135deg,
-                rgba(30, 58, 95, 0.95) 0%,
-                rgba(13, 115, 119, 0.95) 50%,
-                rgba(20, 145, 155, 0.95) 100%);
-            border-radius: 30px;
-            padding: 60px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(30, 58, 95, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(212, 168, 67, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .contact-section::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(212, 168, 67, 0.15), transparent);
-            border-radius: 50%;
-            animation: float-bubble 6s ease-in-out infinite;
-        }
-
-        @keyframes float-bubble {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
-
-        .contact-section::after {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(13, 115, 119, 0.1), transparent);
-            border-radius: 50%;
-            animation: float-bubble 8s ease-in-out infinite reverse;
-        }
-
-        .contact-info h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            line-height: 1.3;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .contact-info p {
-            opacity: 0.9;
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-            backdrop-filter: blur(20px);
-            padding: 18px 25px;
-            border-radius: 16px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(212, 168, 67, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .contact-item:hover {
-            background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
-            transform: translateX(-8px);
-            border-color: rgba(212, 168, 67, 0.5);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        .contact-item-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #d4a843, #e8c96a);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            box-shadow: 0 8px 20px rgba(212, 168, 67, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .contact-item-info {
-            text-align: right;
-        }
-
-        .contact-item-info .label {
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-bottom: 2px;
-        }
-
-        .contact-item-info .value {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .contact-item-info a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-item-info a:hover {
-            color: var(--accent-gold-light);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: linear-gradient(135deg, #1e3a5f 0%, #0d7377 100%);
-            color: white;
-            padding: 50px 20px 20px;
+        .admin-panel h2 {
+            color: #e94560;
+            margin-bottom: 25px;
+            font-size: 22px;
             text-align: center;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            border-top: 1px solid rgba(212, 168, 67, 0.2);
-            padding-top: 30px;
+        /* منطقة رفع الصور */
+        .upload-zone {
+            border: 3px dashed #0f3460;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            background: #0f3460;
+            position: relative;
         }
 
-        .footer p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
+        .upload-zone:hover {
+            border-color: #e94560;
+            background: #1a1a2e;
         }
 
-        .footer-bottom {
-            font-size: 0.8rem;
-            opacity: 0.6;
+        .upload-zone.dragover {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+
+        .upload-zone span {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .upload-zone p {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        .upload-zone input[type="file"] {
+            display: none;
+        }
+
+        /* شريط التقدم */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #0f3460;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-bar.active {
+            display: block;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #e94560;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* حالة الرفع */
+        .upload-status {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #4CAF50;
+            display: none;
+        }
+
+        .upload-status.show {
+            display: block;
+        }
+
+        .upload-status.error {
+            color: #f44336;
+        }
+
+        /* قائمة الصور المرفوعة */
+        .images-list {
             margin-top: 20px;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2rem;
-            }
-
-            .stats-bar {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .depts-row {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .dept-card {
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .dept-card.follow-up-dept {
-                transform: scale(1);
-                order: -1;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                display: none;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .contact-section {
-                grid-template-columns: 1fr;
-                padding: 40px;
-                gap: 30px;
-            }
-
-            .contact-item-info {
-                text-align: right;
-            }
+        .images-list h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
-        /* Big Follow-up Icon Styles */
-        .big-icon-wrapper {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border-radius: 24px;
+        .image-item {
+            display: flex;
+            align-items: center;
+            background: #0f3460;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+
+        .image-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .image-item .info {
+            flex: 1;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .image-item .delete-btn {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .image-item .delete-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        /* ===== إعدادات الحجم والشكل ===== */
+        .shape-settings {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #e94560;
+        }
+
+        .shape-settings h3 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .setting-group label {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* أزرار اختيار الشكل */
+        .shape-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .shape-btn {
+            background: #1a1a2e;
+            border: 2px solid transparent;
+            color: #fff;
+            padding: 10px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn:hover {
+            border-color: #e94560;
+        }
+
+        .shape-btn.active {
+            background: #e94560;
+            border-color: #e94560;
+        }
+
+        .shape-btn .shape-preview {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            margin: 0 auto 5px;
+            transition: all 0.3s ease;
+        }
+
+        .shape-btn[data-shape="rectangle"] .shape-preview { border-radius: 0; }
+        .shape-btn[data-shape="rounded"] .shape-preview { border-radius: 10px; }
+        .shape-btn[data-shape="circle"] .shape-preview { border-radius: 50%; }
+        .shape-btn[data-shape="square"] .shape-preview { border-radius: 0; width: 40px; height: 40px; }
+        .shape-btn[data-shape="pill"] .shape-preview { border-radius: 50px; }
+        .shape-btn[data-shape="diamond"] .shape-preview { transform: rotate(45deg) scale(0.7); }
+        .shape-btn[data-shape="hexagon"] .shape-preview { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+        .shape-btn[data-shape="leaf"] .shape-preview { border-radius: 0 50% 0 50%; }
+
+        /* أزرار نسبة العرض */
+        .ratio-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ratio-btn {
+            background: #1a1a2e;
+            border: 2px solid transparent;
+            color: #fff;
+            padding: 10px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ratio-btn:hover {
+            border-color: #e94560;
+        }
+
+        .ratio-btn.active {
+            background: #e94560;
+            border-color: #e94560;
+        }
+
+        .ratio-btn .ratio-preview {
+            width: 50px;
+            height: 30px;
+            background: #fff;
+            margin: 0 auto 5px;
+            transition: all 0.3s ease;
+        }
+
+        .ratio-btn[data-ratio="16:9"] .ratio-preview { width: 50px; height: 28px; }
+        .ratio-btn[data-ratio="4:3"] .ratio-preview { width: 40px; height: 30px; }
+        .ratio-btn[data-ratio="1:1"] .ratio-preview { width: 30px; height: 30px; }
+        .ratio-btn[data-ratio="3:2"] .ratio-preview { width: 45px; height: 30px; }
+        .ratio-btn[data-ratio="21:9"] .ratio-preview { width: 60px; height: 25px; }
+        .ratio-btn[data-ratio="9:16"] .ratio-preview { width: 20px; height: 35px; }
+
+        /* أزرار حجم العرض */
+        .size-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .size-btn {
+            background: #1a1a2e;
+            border: 2px solid transparent;
+            color: #fff;
+            padding: 10px 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .size-btn:hover {
+            border-color: #e94560;
+        }
+
+        .size-btn.active {
+            background: #e94560;
+            border-color: #e94560;
+        }
+
+        /* شريط تمرير مخصص للحجم */
+        .custom-size-slider {
+            margin-top: 15px;
+        }
+
+        .custom-size-slider input[type="range"] {
+            width: 100%;
+            accent-color: #e94560;
+        }
+
+        .size-value-display {
+            text-align: center;
+            color: #e94560;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* معرض الصور الرئيسي - السلايدر */
+        .gallery-container {
+            width: 100%;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 2.8rem;
-            margin: 0 auto 25px auto;
-            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.35),
-                        inset 0 2px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.4s ease;
-            animation: pulse-icon 3s ease-in-out infinite;
+            position: relative;
+            padding: 20px;
         }
 
-        @keyframes pulse-icon {
-            0%, 100% { transform: scale(1); box-shadow: 0 15px 40px rgba(231, 76, 60, 0.35); }
-            50% { transform: scale(1.08); box-shadow: 0 20px 50px rgba(231, 76, 60, 0.45); }
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            transition: all 0.5s ease;
         }
 
-        .big-followup:hover .big-icon-wrapper {
-            transform: scale(1.12) rotate(-5deg);
-            box-shadow: 0 25px 60px rgba(231, 76, 60, 0.5);
+        /* أحجام السلايدر */
+        .slider-wrapper.size-small { width: 50%; max-width: 500px; }
+        .slider-wrapper.size-medium { width: 75%; max-width: 800px; }
+        .slider-wrapper.size-large { width: 90%; max-width: 1200px; }
+        .slider-wrapper.size-full { width: 100%; max-width: 100%; }
+
+        /* نسب السلايدر */
+        .slider-wrapper.ratio-16-9 { aspect-ratio: 16/9; }
+        .slider-wrapper.ratio-4-3 { aspect-ratio: 4/3; }
+        .slider-wrapper.ratio-1-1 { aspect-ratio: 1/1; }
+        .slider-wrapper.ratio-3-2 { aspect-ratio: 3/2; }
+        .slider-wrapper.ratio-21-9 { aspect-ratio: 21/9; }
+        .slider-wrapper.ratio-9-16 { aspect-ratio: 9/16; }
+
+        /* أشكال السلايدر */
+        .slider-wrapper.shape-rectangle { border-radius: 0; }
+        .slider-wrapper.shape-rounded { border-radius: 20px; }
+        .slider-wrapper.shape-circle { border-radius: 50%; aspect-ratio: 1/1; }
+        .slider-wrapper.shape-square { border-radius: 0; aspect-ratio: 1/1; }
+        .slider-wrapper.shape-pill { border-radius: 50px; }
+        .slider-wrapper.shape-diamond { 
+            transform: rotate(45deg) scale(0.7);
+            border-radius: 10px;
+        }
+        .slider-wrapper.shape-diamond .slider-track,
+        .slider-wrapper.shape-diamond .slide,
+        .slider-wrapper.shape-diamond .slide img {
+            transform: rotate(-45deg) scale(1.43);
+        }
+        .slider-wrapper.shape-hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .slider-wrapper.shape-triangle {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .slider-wrapper.shape-leaf {
+            border-radius: 0 50% 0 50%;
         }
 
-        .dept-card.big-followup {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(231, 76, 60, 0.06));
-            border: 2px solid rgba(231, 76, 60, 0.35);
-            transform: scale(1.02);
-        }
-
-        .dept-card.big-followup:hover {
-            transform: scale(1.05) translateY(-10px);
-            border-color: rgba(231, 76, 60, 0.6);
-            box-shadow: 0 30px 70px rgba(231, 76, 60, 0.2);
-        }
-
-        .dept-card.big-followup .dept-line {
-            background: linear-gradient(90deg, #e74c3c, #c0392b);
-            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
-        }
-
-        .dept-card.big-followup:hover .dept-line {
-            width: 100px;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.5);
-        }
-
-        /* Compact Departments Row - Single Line */
-        .compact-row {
+        .slider-track {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: nowrap;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide img {
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
         }
 
-        .compact-card {
-            padding: 16px 10px 14px !important;
-            min-width: 0;
-            flex: 1;
-            max-width: 180px;
-            min-height: auto;
+        .slide:hover img {
+            transform: scale(1.05);
         }
 
-        .compact-card p {
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 40px 30px 30px;
+            color: #fff;
+        }
+
+        .slide-caption h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .slide-caption p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* أزرار التنقل */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .nav-btn:hover {
+            background: rgba(233, 69, 96, 0.8);
+        }
+
+        .nav-prev { right: 20px; }
+        .nav-next { left: 20px; }
+
+        /* نقاط التنقل */
+        .dots-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #e94560;
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* رسالة فارغة */
+        .empty-state {
+            text-align: center;
+            color: #666;
+        }
+
+        .empty-state h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        /* تأثيرات إضافية */
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* عداد الصور */
+        .image-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        /* زر التشغيل التلقائي */
+        .autoplay-toggle {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .autoplay-toggle.active {
+            background: rgba(233, 69, 96, 0.8);
+        }
+
+        /* إعدادات إضافية */
+        .extra-settings {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #0f3460;
+        }
+
+        .extra-settings h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .toggle-setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #0f3460;
+            border-radius: 8px;
+        }
+
+        .toggle-setting span {
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #333;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #e94560;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(-24px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-panel {
+                width: 100%;
+                left: -100%;
+            }
+            .slider-wrapper {
+                width: 95% !important;
+            }
+            .shape-options, .ratio-options {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* مؤشر التحميل */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .loading-overlay.hidden {
             display: none;
         }
 
-        .compact-icon {
-            width: 32px !important;
-            height: 32px !important;
-            font-size: 0.85rem !important;
-            border-radius: 8px !important;
-            margin: 0 auto 8px auto !important;
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #0f3460;
+            border-top-color: #e94560;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .compact-title {
-            font-size: 0.75rem !important;
-            margin-bottom: 6px !important;
-            white-space: nowrap;
-            font-weight: 600;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .compact-line {
-            width: 20px !important;
-            height: 2px !important;
-            margin-top: 0 !important;
-            margin: 0 auto !important;
+        .loading-text {
+            margin-top: 15px;
+            color: #fff;
+            font-size: 14px;
         }
 
-        .compact-card:hover .compact-line {
-            width: 40px !important;
+        /* معلومات التخزين */
+        .storage-info {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #4CAF50;
         }
 
-        .compact-card:hover .compact-icon {
-            transform: rotate(-3deg) scale(1.08) !important;
+        .storage-info h4 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
-        /* Follow-up compact card styles */
-        .follow-up-compact {
-            border: 1px solid rgba(231, 76, 60, 0.25) !important;
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(231, 76, 60, 0.04)) !important;
+        .storage-info p {
+            color: #ccc;
+            font-size: 12px;
+            line-height: 1.6;
         }
 
-        .follow-up-compact:hover {
-            border-color: rgba(231, 76, 60, 0.5) !important;
-            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(231, 76, 60, 0.08)) !important;
-        }
-
-        .follow-up-icon {
-            background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
-            color: white !important;
-        }
-
-        .follow-up-compact:hover .follow-up-icon {
-            background: linear-gradient(135deg, #ff6b6b, #e74c3c) !important;
-        }
-
-        .follow-up-line {
-            background: linear-gradient(90deg, #e74c3c, #c0392b) !important;
-        }
-
-        .follow-up-compact:hover .follow-up-line {
-            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3) !important;
-        }
-
-        @media (max-width: 768px) {
-            .compact-row {
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            .compact-card {
-                max-width: 90px;
-                padding: 10px 6px !important;
-            }
-            .compact-icon {
-                width: 26px !important;
-                height: 26px !important;
-                font-size: 0.7rem !important;
-            }
-            .compact-title {
-                font-size: 0.6rem !important;
-            }
+        .storage-info .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+            color: #4CAF50;
+            font-size: 13px;
         }
     </style>
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
-<base target="_blank">
+
 <base target="_blank">
 </head>
 <body>
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="container">
-            <span><i class="fas fa-clock"></i> ساعات العمل: السبت - الخميس من 8:00 صباحاً إلى 3:00 مساءً</span>
-            <span><i class="fas fa-calendar"></i> يوم الجمعة والعطل الرسمية: مغلق</span>
+
+    <!-- مؤشر التحميل -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">جاري التحميل...</div>
+    </div>
+
+    <!-- Admin panel hidden for public view -->
+
+    <!-- لوحة التحكم المخفية -->
+    <div class="admin-panel" id="adminPanel" style="display:none !important;">
+        <h2>🖼️ إدارة الصور</h2>
+
+        <!-- معلومات التخزين -->
+        <div class="storage-info">
+            <h4>☁️ التخزين السحابي - Imgur</h4>
+            <p>الصور تُرفع تلقائياً إلى Imgur وتُحفظ دائماً. لا يحتاج حساب أو إعدادات.</p>
+            <div class="status">
+                <span>🟢</span>
+                <span>متصل - جاهز للرفع</span>
+            </div>
+        </div>
+
+        <!-- منطقة الرفع -->
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <span>📤</span>
+            <p>اضغط هنا أو اسحب الصور لرفعها</p>
+            <p style="font-size: 12px; margin-top: 5px;">يدعم: JPG, PNG, GIF, WEBP - حتى 10 ميجا</p>
+            <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFiles(this.files)">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="upload-status" id="uploadStatus"></div>
+        </div>
+
+        <!-- قائمة الصور -->
+        <div class="images-list" id="imagesList">
+            <h3>📋 الصور المضافة (<span id="imageCount">0</span>)</h3>
+            <div id="imagesContainer"></div>
+        </div>
+
+        <!-- ===== إعدادات الشكل ===== -->
+        <div class="shape-settings">
+            <h3>🎨 تضبيط الشكل والحجم</h3>
+
+            <!-- اختيار الشكل -->
+            <div class="setting-group">
+                <label>🔷 شكل العرض</label>
+                <div class="shape-options">
+                    <div class="shape-btn active" data-shape="rounded" onclick="setShape('rounded')">
+                        <div class="shape-preview"></div>
+                        <div>دائري</div>
+                    </div>
+                    <div class="shape-btn" data-shape="rectangle" onclick="setShape('rectangle')">
+                        <div class="shape-preview"></div>
+                        <div>مستطيل</div>
+                    </div>
+                    <div class="shape-btn" data-shape="circle" onclick="setShape('circle')">
+                        <div class="shape-preview"></div>
+                        <div>دائرة</div>
+                    </div>
+                    <div class="shape-btn" data-shape="square" onclick="setShape('square')">
+                        <div class="shape-preview"></div>
+                        <div>مربع</div>
+                    </div>
+                    <div class="shape-btn" data-shape="pill" onclick="setShape('pill')">
+                        <div class="shape-preview"></div>
+                        <div>كبسولة</div>
+                    </div>
+                    <div class="shape-btn" data-shape="diamond" onclick="setShape('diamond')">
+                        <div class="shape-preview"></div>
+                        <div>معين</div>
+                    </div>
+                    <div class="shape-btn" data-shape="hexagon" onclick="setShape('hexagon')">
+                        <div class="shape-preview"></div>
+                        <div>سداسي</div>
+                    </div>
+                    <div class="shape-btn" data-shape="leaf" onclick="setShape('leaf')">
+                        <div class="shape-preview"></div>
+                        <div>ورقة</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- اختيار نسبة العرض -->
+            <div class="setting-group">
+                <label>📐 نسبة العرض للارتفاع</label>
+                <div class="ratio-options">
+                    <div class="ratio-btn active" data-ratio="16:9" onclick="setRatio('16:9')">
+                        <div class="ratio-preview"></div>
+                        <div>16:9</div>
+                    </div>
+                    <div class="ratio-btn" data-ratio="4:3" onclick="setRatio('4:3')">
+                        <div class="ratio-preview"></div>
+                        <div>4:3</div>
+                    </div>
+                    <div class="ratio-btn" data-ratio="1:1" onclick="setRatio('1:1')">
+                        <div class="ratio-preview"></div>
+                        <div>1:1</div>
+                    </div>
+                    <div class="ratio-btn" data-ratio="3:2" onclick="setRatio('3:2')">
+                        <div class="ratio-preview"></div>
+                        <div>3:2</div>
+                    </div>
+                    <div class="ratio-btn" data-ratio="21:9" onclick="setRatio('21:9')">
+                        <div class="ratio-preview"></div>
+                        <div>21:9</div>
+                    </div>
+                    <div class="ratio-btn" data-ratio="9:16" onclick="setRatio('9:16')">
+                        <div class="ratio-preview"></div>
+                        <div>9:16</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- اختيار حجم العرض -->
+            <div class="setting-group">
+                <label>📏 حجم العرض</label>
+                <div class="size-options">
+                    <div class="size-btn" data-size="small" onclick="setSize('small')">
+                        <div>صغير</div>
+                        <div style="font-size: 10px; color: #888;">50%</div>
+                    </div>
+                    <div class="size-btn active" data-size="medium" onclick="setSize('medium')">
+                        <div>متوسط</div>
+                        <div style="font-size: 10px; color: #888;">75%</div>
+                    </div>
+                    <div class="size-btn" data-size="large" onclick="setSize('large')">
+                        <div>كبير</div>
+                        <div style="font-size: 10px; color: #888;">90%</div>
+                    </div>
+                    <div class="size-btn" data-size="full" onclick="setSize('full')">
+                        <div>كامل</div>
+                        <div style="font-size: 10px; color: #888;">100%</div>
+                    </div>
+                </div>
+
+                <div class="custom-size-slider">
+                    <label style="font-size: 12px; color: #888; margin-bottom: 5px;">تعديل يدوي للحجم</label>
+                    <input type="range" id="customSizeRange" min="20" max="100" value="75" oninput="setCustomSize(this.value)">
+                    <div class="size-value-display" id="sizeValueDisplay">75%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- إعدادات إضافية -->
+        <div class="extra-settings">
+            <h3>⚙️ إعدادات إضافية</h3>
+
+            <div class="toggle-setting">
+                <span>📝 عرض العنوان</span>
+                <div class="toggle-switch active" id="captionToggle" onclick="toggleSetting('caption')"></div>
+            </div>
+
+            <div class="toggle-setting">
+                <span>🔄 التشغيل التلقائي</span>
+                <div class="toggle-switch" id="autoplayToggle" onclick="toggleSetting('autoplay')"></div>
+            </div>
+
+            <div class="toggle-setting">
+                <span>🔍 تكبير عند المرور</span>
+                <div class="toggle-switch active" id="zoomToggle" onclick="toggleSetting('zoom')"></div>
+            </div>
+
+            <div class="setting-group" style="margin-top: 15px;">
+                <label>⏱️ سرعة الانتقال (ثانية)</label>
+                <input type="range" id="speedRange" min="1" max="10" value="3" onchange="updateSpeed()" style="width: 100%; accent-color: #e94560;">
+                <div class="size-value-display" id="speedDisplay">3 ثواني</div>
+            </div>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo-section">
-                <!-- استبدل MINISTRY_LOGO_URL_HERE برابط شعار الوزارة الفعلي -->
-                <img src="image.jpg" alt="شعار الوزارة" class="logo-icon" style="padding:0; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="logo-icon" style="display:none;">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>قسم التصاريح الأمنية</h1>
-                    <span>وزارة الشباب والرياضة</span>
-                </div>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#home" class="nav-link"><i class="fas fa-home" style="font-size:0.85rem;"></i> الرئيسية</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#services" class="nav-link"><i class="fas fa-cog" style="font-size:0.85rem;"></i> الخدمات</a>
-                </li>
-                <!-- قائمة الاستمارات المنسدلة -->
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fas fa-file-alt" style="font-size:0.85rem;"></i> الاستمارات
-                        <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i>
-                    </a>
-                    <div class="dropdown">
-                        <div class="dropdown-header">روابط التصاريح</div>
-                        <a href="https://tasreehamnee-ux.github.io/estmaraa.in/" class="dropdown-item" target="_blank">
-                            <i class="fas fa-building" style="font-size:0.9rem;"></i>
-                            <span>تصريح إقامة أنشطة داخل المنشآت</span>
-                        </a>
-                        <a href="https://tasreehamnee-ux.github.io/etehad.com/" class="dropdown-item" target="_blank">
-                            <i class="fas fa-door-open" style="font-size:0.9rem;"></i>
-                            <span>تصريح دخول الاتحادات</span>
-                        </a>
-                        <a href="https://tasreehamnee-ux.github.io/estmaraa.com/" class="dropdown-item" target="_blank">
-                            <i class="fas fa-car" style="font-size:0.9rem;"></i>
-                            <span>منح تخويل عجلات</span>
-                        </a>
-                        <a href="https://tasreehamnee-ux.github.io/estee.in/" class="dropdown-item" target="_blank">
-                            <i class="fas fa-id-badge" style="font-size:0.9rem;"></i>
-                            <span>منح استمارة هوية</span>
-                        </a>
-                        <a href="https://tasreehamnee-ux.github.io/estimara.id/" class="dropdown-item" target="_blank">
-                            <i class="fas fa-dolly" style="font-size:0.9rem;"></i>
-                            <span>إخراج وإدخال مواد</span>
-                        </a>
-                    </div>
-                </li>
-                <!-- قائمة الشعب المنسدلة -->
-                <li class="nav-item">
-                    <a class="nav-link">
-                        <i class="fas fa-sitemap" style="font-size:0.85rem;"></i> الشعب
-                        <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i>
-                    </a>
-                    <div class="dropdown">
-                        <div class="dropdown-header">الشعب التابعة للقسم</div>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-eye" style="font-size:0.9rem; color:#e74c3c;"></i>
-                            <span>شعبة المتابعة</span>
-                            <span class="link-desc">متابعة وتقييم الطلبات</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-id-card" style="font-size:0.9rem;"></i>
-                            <span>شعبة الهويات</span>
-                            <span class="link-desc">إصدار الهويات الأمنية</span>
-                        </a>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-building" style="font-size:0.9rem;"></i>
-                            <span>شعبة الإدارية</span>
-                            <span class="link-desc">الشؤون الإدارية</span>
-                        </a>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-shield-alt" style="font-size:0.9rem;"></i>
-                            <span>شعبة الأمن والسلامة</span>
-                            <span class="link-desc">تأمين الفعاليات</span>
-                        </a>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-file-signature" style="font-size:0.9rem;"></i>
-                            <span>شعبة التصاريح الأمنية</span>
-                            <span class="link-desc">معالجة طلبات التصاريح</span>
-                        </a>
-                        <a href="#about" class="dropdown-item">
-                            <i class="fas fa-laptop-code" style="font-size:0.9rem;"></i>
-                            <span>شعبة التحول الرقمي</span>
-                            <span class="link-desc">الأنظمة الرقمية</span>
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link"><i class="fas fa-phone" style="font-size:0.85rem;"></i> التواصل</a>
-                </li>
-            </ul>
-            <div class="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </nav>
+    <!-- معرض الصور الرئيسي -->
+    <div class="gallery-container">
+        <div class="slider-wrapper size-medium ratio-16-9 shape-rounded" id="sliderWrapper">
+            <div class="image-counter" id="imageCounter">0 / 0</div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-shield-alt"></i>
-                <span>خدمة آمنة وموثوقة</span>
-            </div>
-            <h2>قسم <span class="highlight">التصاريح الأمنية</span></h2>
-            <p>نوفر خدمات تصاريح أمنية متطورة وآمنة لكافة الفعاليات والمناسبات الرياضية والشبابية</p>
-            <div class="hero-buttons">
-                <a href="#services" class="btn btn-primary">
-                    <i class="fas fa-arrow-down"></i>
-                    تعرف على الخدمات
-                </a>
-                <a href="#contact" class="btn btn-outline">
-                    <i class="fas fa-phone"></i>
-                    تواصل معنا
-                </a>
-            </div>
-        </div>
-    </section>
+            <!-- Autoplay button removed -->
 
-    <!-- Departments Section -->
-    <section class="section" id="about" style="padding: 50px 20px;">
-        <div class="section-header" style="margin-bottom: 30px;">
-            <span class="section-tag">الأقسام المختلفة</span>
-            <h2 class="section-title">الشعب</h2>
-            <p class="section-desc">يتكون قسم التصاريح الأمنية من عدة شعب متخصصة</p>
-        </div>
-        <div class="depts-wrapper">
-            <!-- 6 شعب في سطر واحد - تصغير الأيقونات (في الأعلى) -->
-            <div class="depts-row compact-row">
-                <a href="https://tasreehamnee-ux.github.io/almt.com/" class="dept-card compact-card follow-up-compact" target="_blank" style="text-decoration: none; color: inherit;">
-                    <div class="dept-icon compact-icon follow-up-icon">
-                        <i class="fas fa-eye"></i>
+            <div class="slider-track" id="sliderTrack">
+                <div class="empty-state" style="min-width: 100%; display: flex; align-items: center; justify-content: center;">
+                    <div>
+                        <h2>📷 لا توجد صور</h2>
+                        <p>افتح لوحة التحكم لإضافة صور جديدة</p>
+                        <p style="font-size: 12px; margin-top: 10px; color: #888;">الصور تُحفظ تلقائياً على السحابة</p>
                     </div>
-                    <h3 class="compact-title">المتابعة</h3>
-                    <div class="dept-line compact-line follow-up-line"></div>
-                </a>
-                <div class="dept-card compact-card">
-                    <div class="dept-icon compact-icon">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <h3 class="compact-title">الهويات</h3>
-                    <div class="dept-line compact-line"></div>
-                </div>
-                <div class="dept-card compact-card">
-                    <div class="dept-icon compact-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3 class="compact-title">الإدارية</h3>
-                    <div class="dept-line compact-line"></div>
-                </div>
-                <div class="dept-card compact-card">
-                    <div class="dept-icon compact-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="compact-title">الأمن والسلامة</h3>
-                    <div class="dept-line compact-line"></div>
-                </div>
-                <div class="dept-card compact-card">
-                    <div class="dept-icon compact-icon">
-                        <i class="fas fa-file-signature"></i>
-                    </div>
-                    <h3 class="compact-title">التصاريح</h3>
-                    <div class="dept-line compact-line"></div>
-                </div>
-                <div class="dept-card compact-card">
-                    <div class="dept-icon compact-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3 class="compact-title">التحول الرقمي</h3>
-                    <div class="dept-line compact-line"></div>
                 </div>
             </div>
-            <!-- شعبة المتابعة - كبيرة في الأسفل -->
-            <div class="depts-row" style="margin-top: 30px;">
-                <a href="https://tasreehamnee-ux.github.io/almt.com/" class="dept-card follow-up-dept big-followup" target="_blank" style="text-decoration: none; color: inherit; max-width: 420px; padding: 45px 35px;">
-                    <div class="big-icon-wrapper">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 12px;">شعبة المتابعة</h3>
-                    <p style="font-size: 0.95rem;">خاص بشعبة المتابعة - متابعة وتقييم كافة الطلبات والتصاريح الأمنية</p>
-                    <div class="dept-line" style="width: 60px;"></div>
-                </a>
-            </div>
-        </div>
-    </section>
 
+            <button class="nav-btn nav-prev" onclick="prevSlide()">❮</button>
+            <button class="nav-btn nav-next" onclick="nextSlide()">❯</button>
 
-    <!-- SLIDER SECTION -->
-    <section class="section" id="slider" style="padding: 40px 20px;">
-        <div class="section-header" style="margin-bottom: 30px;">
-            <span class="section-tag">معرض الصور</span>
-            <h2 class="section-title">صور الفعاليات</h2>
-            <p class="section-desc">صور من الفعاليات والأنشطة الرياضية والشبابية</p>
+            <div class="dots-container" id="dotsContainer"></div>
         </div>
-        <div style="display: flex; justify-content: center;">
-            <iframe
-                src="https://tasreehamnee-ux.github.io/maer.im/"
-                width="100%"
-                height="600px"
-                style="border: none; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); max-width: 1200px;"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </section>
+    </div>
 
-    <!-- Contact Section -->
-    <section class="section" id="contact">
-        <div class="contact-section">
-            <div class="contact-info">
-                <h3>تواصل معنا</h3>
-                <p>فريقنا المتخصص جاهز للإجابة على جميع استفساراتك وتقديم الدعم اللازم في أي وقت</p>
-            </div>
-            <div class="contact-links">
-                <div class="contact-item">
-                    <div class="contact-item-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-item-info">
-                        <div class="label">الهاتف</div>
-                        <div class="value">+966-XX-XXXX-XXXX</div>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-item-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-item-info">
-                        <div class="label">البريد الإلكتروني</div>
-                        <div class="value"><a href="mailto:follow-up.mio@moys.gov.iq">follow-up.mio@moys.gov.iq</a></div>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-item-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-item-info">
-                        <div class="label">العنوان</div>
-                        <div class="value">بغداد الجمهورية العراقية </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script>
+        // ===== المتغيرات العامة =====
+        let images = [];
+        let currentSlide = 0;
+        let autoplayInterval = null;
+        let isAutoplay = false;
+        let currentShape = 'rounded';
+        let currentRatio = '16:9';
+        let currentSize = 'medium';
+        let customSizeValue = 75;
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>© 2026 قسم التصاريح الأمنية - وزارة الشباب والرياضة</p>
-            <p>جميع الحقوق محفوظة</p>
-            <div class="footer-bottom">
-                <p>تم تطويره بواسطة فريق التطوير</p>
-            </div>
-        </div>
-    </footer>
+        let settings = {
+            speed: 3000,
+            showCaption: true,
+            zoomOnHover: true
+        };
+
+        // ===== Imgur API Client ID (مجاني وعام) =====
+        const IMGUR_CLIENT_ID = '546c25a59c58ad7';
+
+        // ===== مؤشر التحميل =====
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // ===== رفع الصورة إلى Imgur =====
+        async function uploadToImgur(file) {
+            showLoading('جاري رفع الصورة إلى السحابة...');
+
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const response = await fetch('https://api.imgur.com/3/image', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Client-ID ' + IMGUR_CLIENT_ID
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    hideLoading();
+                    return {
+                        id: data.data.id,
+                        url: data.data.link,
+                        deleteHash: data.data.deletehash,
+                        name: file.name
+                    };
+                } else {
+                    throw new Error(data.data.error);
+                }
+            } catch (error) {
+                hideLoading();
+                console.error('Error uploading to Imgur:', error);
+
+                // إذا فشل Imgur، نستخدم الرابط المحلي
+                return await uploadLocal(file);
+            }
+        }
+
+        // ===== رفع محلي (احتياطي) =====
+        async function uploadLocal(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    resolve({
+                        id: 'local_' + Date.now(),
+                        url: e.target.result,
+                        deleteHash: null,
+                        name: file.name,
+                        isLocal: true
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ===== حذف صورة من Imgur =====
+        async function deleteFromImgur(deleteHash) {
+            if (!deleteHash) return;
+
+            try {
+                await fetch('https://api.imgur.com/3/image/' + deleteHash, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Client-ID ' + IMGUR_CLIENT_ID
+                    }
+                });
+            } catch (error) {
+                console.error('Error deleting from Imgur:', error);
+            }
+        }
+
+        // ===== فتح/إغلاق لوحة التحكم =====
+        function toggleAdminPanel() {
+            document.getElementById('adminPanel').classList.toggle('active');
+        }
+
+        // ===== إعدادات الشكل =====
+        function setShape(shape) {
+            currentShape = shape;
+            document.querySelectorAll('.shape-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.shape-btn[data-shape="${shape}"]`).classList.add('active');
+            updateSliderAppearance();
+        }
+
+        function setRatio(ratio) {
+            currentRatio = ratio;
+            document.querySelectorAll('.ratio-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.ratio-btn[data-ratio="${ratio}"]`).classList.add('active');
+            updateSliderAppearance();
+        }
+
+        function setSize(size) {
+            currentSize = size;
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.size-btn[data-size="${size}"]`).classList.add('active');
+
+            const sizes = { small: 50, medium: 75, large: 90, full: 100 };
+            document.getElementById('customSizeRange').value = sizes[size];
+            document.getElementById('sizeValueDisplay').textContent = sizes[size] + '%';
+            customSizeValue = sizes[size];
+
+            updateSliderAppearance();
+        }
+
+        function setCustomSize(value) {
+            customSizeValue = value;
+            document.getElementById('sizeValueDisplay').textContent = value + '%';
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+
+            const wrapper = document.getElementById('sliderWrapper');
+            wrapper.style.width = value + '%';
+            wrapper.classList.remove('size-small', 'size-medium', 'size-large', 'size-full');
+        }
+
+        function updateSliderAppearance() {
+            const wrapper = document.getElementById('sliderWrapper');
+            wrapper.className = 'slider-wrapper';
+            wrapper.classList.add(`shape-${currentShape}`);
+            wrapper.classList.add(`ratio-${currentRatio.replace(':', '-')}`);
+
+            if (customSizeValue === 75) {
+                wrapper.classList.add(`size-${currentSize}`);
+                wrapper.style.width = '';
+            } else {
+                wrapper.style.width = customSizeValue + '%';
+            }
+        }
+
+        // ===== الإعدادات الإضافية =====
+        function toggleSetting(type) {
+            const toggle = document.getElementById(type + 'Toggle');
+            toggle.classList.toggle('active');
+
+            switch(type) {
+                case 'caption':
+                    settings.showCaption = toggle.classList.contains('active');
+                    updateSlider();
+                    break;
+                case 'autoplay':
+                    if (toggle.classList.contains('active')) startAutoplay();
+                    else stopAutoplay();
+                    break;
+                case 'zoom':
+                    settings.zoomOnHover = toggle.classList.contains('active');
+                    updateZoomEffect();
+                    break;
+            }
+        }
+
+        function updateZoomEffect() {
+            const slides = document.querySelectorAll('.slide img');
+            slides.forEach(img => {
+                img.style.transition = settings.zoomOnHover ? 'all 0.5s ease' : 'none';
+            });
+        }
+
+        function updateSpeed() {
+            const value = document.getElementById('speedRange').value;
+            settings.speed = value * 1000;
+            document.getElementById('speedDisplay').textContent = value + ' ثواني';
+            if (isAutoplay) { stopAutoplay(); startAutoplay(); }
+        }
+
+        // ===== رفع الصور =====
+        const uploadZone = document.getElementById('uploadZone');
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        async function handleFiles(files) {
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            const uploadStatus = document.getElementById('uploadStatus');
+
+            progressBar.classList.add('active');
+            uploadStatus.className = 'upload-status';
+
+            const totalFiles = files.length;
+            let uploaded = 0;
+            let successCount = 0;
+            let failCount = 0;
+
+            for (const file of Array.from(files)) {
+                if (!file.type.startsWith('image/')) continue;
+
+                progressFill.style.width = ((uploaded / totalFiles) * 100) + '%';
+
+                const result = await uploadToImgur(file);
+
+                if (result) {
+                    images.unshift({
+                        id: result.id,
+                        src: result.url,
+                        name: result.name,
+                        caption: result.name.split('.')[0],
+                        deleteHash: result.deleteHash,
+                        isLocal: result.isLocal || false
+                    });
+                    successCount++;
+                } else {
+                    failCount++;
+                }
+
+                uploaded++;
+                progressFill.style.width = ((uploaded / totalFiles) * 100) + '%';
+            }
+
+            progressBar.classList.remove('active');
+            progressFill.style.width = '0%';
+
+            if (failCount > 0) {
+                uploadStatus.className = 'upload-status error show';
+                uploadStatus.textContent = `⚠️ ${successCount} نجحت، ${failCount} فشلت`;
+            } else {
+                uploadStatus.className = 'upload-status show';
+                uploadStatus.textContent = `✅ تم رفع ${successCount} صورة بنجاح!`;
+            }
+
+            setTimeout(() => uploadStatus.classList.remove('show'), 3000);
+
+            // حفظ في localStorage
+            saveImagesToStorage();
+            updateUI();
+        }
+
+        async function removeImage(id) {
+            const image = images.find(img => img.id === id);
+
+            if (image && image.deleteHash) {
+                await deleteFromImgur(image.deleteHash);
+            }
+
+            images = images.filter(img => img.id !== id);
+            if (currentSlide >= images.length) currentSlide = Math.max(0, images.length - 1);
+
+            saveImagesToStorage();
+            updateUI();
+        }
+
+        // ===== حفظ وتحميل الصور =====
+        function saveImagesToStorage() {
+            // نحفظ فقط الروابط والبيانات الأساسية
+            const imagesToSave = images.map(img => ({
+                id: img.id,
+                src: img.src,
+                name: img.name,
+                caption: img.caption,
+                deleteHash: img.deleteHash,
+                isLocal: img.isLocal
+            }));
+            localStorage.setItem('sliderImages', JSON.stringify(imagesToSave));
+        }
+
+        function loadImagesFromStorage() {
+            const saved = localStorage.getItem('sliderImages');
+            if (saved) {
+                try {
+                    images = JSON.parse(saved);
+                    updateUI();
+                } catch (e) {
+                    console.error('Error loading images:', e);
+                }
+            }
+        }
+
+        // ===== تحديث الواجهة =====
+        function updateUI() {
+            const container = document.getElementById('imagesContainer');
+            document.getElementById('imageCount').textContent = images.length;
+
+            if (images.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">لا توجد صور مضافة</p>';
+            } else {
+                container.innerHTML = images.map(img => `
+                    <div class="image-item fade-in">
+                        <img src="${img.src}" alt="${img.name}">
+                        <div class="info">
+                            <div style="color: #fff; font-weight: bold;">${img.name}</div>
+                            <div style="color: #888; font-size: 10px;">${img.isLocal ? '💻 محلي' : '☁️ سحابي'}</div>
+                        </div>
+                        <button class="delete-btn" onclick="removeImage('${img.id}')">🗑️ حذف</button>
+                    </div>
+                `).join('');
+            }
+
+            updateSlider();
+        }
+
+        function updateSlider() {
+            const track = document.getElementById('sliderTrack');
+            const dotsContainer = document.getElementById('dotsContainer');
+            const counter = document.getElementById('imageCounter');
+
+            if (images.length === 0) {
+                track.innerHTML = `
+                    <div class="empty-state" style="min-width: 100%; display: flex; align-items: center; justify-content: center;">
+                        <div>
+                            <h2>📷 لا توجد صور</h2>
+                            <p>افتح لوحة التحكم لإضافة صور جديدة</p>
+                            <p style="font-size: 12px; margin-top: 10px; color: #888;">الصور تُحفظ تلقائياً على السحابة</p>
+                        </div>
+                    </div>
+                `;
+                dotsContainer.innerHTML = '';
+                counter.textContent = '0 / 0';
+                return;
+            }
+
+            track.innerHTML = images.map((img, index) => `
+                <div class="slide fade-in" data-index="${index}">
+                    <img src="${img.src}" alt="${img.name}" style="transition: ${settings.zoomOnHover ? 'all 0.5s ease' : 'none'};">
+                    ${settings.showCaption ? `
+                        <div class="slide-caption">
+                            <h3>${img.caption}</h3>
+                            <p>صورة ${index + 1} من ${images.length}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            dotsContainer.innerHTML = images.map((_, index) => `
+                <div class="dot ${index === currentSlide ? 'active' : ''}" onclick="goToSlide(${index})"></div>
+            `).join('');
+
+            counter.textContent = `${currentSlide + 1} / ${images.length}`;
+            goToSlide(currentSlide);
+        }
+
+        // ===== التنقل بين الشرائح =====
+        function goToSlide(index) {
+            if (images.length === 0) return;
+            currentSlide = index;
+            const track = document.getElementById('sliderTrack');
+            track.style.transform = `translateX(${index * 100}%)`;
+            track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            document.getElementById('imageCounter').textContent = `${index + 1} / ${images.length}`;
+        }
+
+        function nextSlide() {
+            if (images.length === 0) return;
+            currentSlide = (currentSlide + 1) % images.length;
+            goToSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            if (images.length === 0) return;
+            currentSlide = (currentSlide - 1 + images.length) % images.length;
+            goToSlide(currentSlide);
+        }
+
+        // ===== التشغيل التلقائي =====
+        function startAutoplay() {
+            isAutoplay = true;
+            document.getElementById('autoplayBtn').innerHTML = '⏸️ إيقاف مؤقت';
+            document.getElementById('autoplayBtn').classList.add('active');
+            autoplayInterval = setInterval(nextSlide, settings.speed);
+        }
+
+        function stopAutoplay() {
+            isAutoplay = false;
+            document.getElementById('autoplayBtn').innerHTML = '▶️ تشغيل تلقائي';
+            document.getElementById('autoplayBtn').classList.remove('active');
+            clearInterval(autoplayInterval);
+        }
+
+        function toggleAutoplay() {
+            if (isAutoplay) {
+                stopAutoplay();
+                document.getElementById('autoplayToggle').classList.remove('active');
+            } else {
+                startAutoplay();
+                document.getElementById('autoplayToggle').classList.add('active');
+            }
+        }
+
+        // ===== اختصارات لوحة المفاتيح =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') prevSlide();
+            if (e.key === 'ArrowLeft') nextSlide();
+            if (e.key === ' ') {
+                e.preventDefault();
+                toggleAutoplay();
+            }
+        });
+
+        // ===== اللمس للجوال =====
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const sliderWrapper = document.getElementById('sliderWrapper');
+
+        sliderWrapper.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        sliderWrapper.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }
+
+        // ===== تحميل الصور المحفوظة عند فتح الصفحة =====
+        window.addEventListener('load', () => {
+            loadImagesFromStorage();
+        });
+    </script>
 </body>
 </html>
