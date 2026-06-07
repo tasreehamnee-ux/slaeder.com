@@ -8,35 +8,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getStorage, ref, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
-        // ✅ الإعدادات الصحيحة من الصورة
-        const firebaseConfig = {
-            apiKey: "AIzaSyDs_A0u6X646sQTxpoEH80Y-fgFjU9gYLM",
-            authDomain: "maera-46640-f4c4f.firebaseapp.com",
-            projectId: "maera-46640-f4c4f",
-            storageBucket: "maera-46640-f4c4f.firebasestorage.app",
-            messagingSenderId: "99613600863",
-            appId: "1:99613600863:web:232e7b0319a91e7fac3fea",
-            measurementId: "G-3N9JE3Q51E"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
-
-        // Gallery Slider Class
-        class GallerySlider {
+    <script>
+        // GitHub Gallery Slider - Fetches images dynamically from GitHub repo via jsDelivr CDN
+        class GitHubGallerySlider {
             constructor(containerId, options = {}) {
                 this.container = document.getElementById(containerId);
-                this.folderPath = options.folderPath || 'images/';
+                this.githubUser = options.githubUser || 'tasreehamnee-ux';
+                this.githubRepo = options.githubRepo || 'gallery-images';
+                this.githubBranch = options.githubBranch || 'main';
                 this.autoPlay = options.autoPlay !== false;
                 this.interval = options.interval || 5000;
                 this.animationSpeed = options.animationSpeed || 800;
                 this.currentIndex = 0;
                 this.images = [];
-                this.timer = null;
                 this.progressTimer = null;
                 this.init();
             }
@@ -44,13 +28,18 @@
             async init() {
                 this.createStyles();
                 this.createHTML();
-                await this.loadImages();
+                this.showLoading();
+                await this.fetchImagesFromGitHub();
+
                 if (this.images.length > 0) {
                     this.setupSlider();
                     if (this.autoPlay) this.startAutoPlay();
                 } else {
-                    this.showPlaceholder();
+                    this.showEmptyState();
                 }
+
+                // Refresh every 60 seconds to check for new images
+                setInterval(() => this.refreshImages(), 60000);
             }
 
             createStyles() {
@@ -86,33 +75,6 @@
 
                     .gallery-slider .slide.active {
                         opacity: 1;
-                    }
-
-                    .gallery-slider .loading {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        color: #d4a843;
-                        font-family: 'Cairo', sans-serif;
-                        font-size: 1.2rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
-
-                    .gallery-slider .loading::after {
-                        content: '';
-                        width: 20px;
-                        height: 20px;
-                        border: 2px solid #d4a843;
-                        border-top-color: transparent;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                    }
-
-                    @keyframes spin {
-                        to { transform: rotate(360deg); }
                     }
 
                     .gallery-slider .dots {
@@ -162,6 +124,89 @@
                         box-shadow: 0 0 10px rgba(212,168,67,0.3);
                     }
 
+                    .gallery-loading {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        color: #d4a843;
+                        font-family: 'Cairo', sans-serif;
+                        gap: 15px;
+                    }
+
+                    .gallery-loading i {
+                        font-size: 3rem;
+                        animation: spin 1s linear infinite;
+                    }
+
+                    .gallery-loading span {
+                        font-size: 1.1rem;
+                    }
+
+                    @keyframes spin {
+                        to { transform: rotate(360deg); }
+                    }
+
+                    .gallery-empty {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        color: #d4a843;
+                        font-family: 'Cairo', sans-serif;
+                        gap: 15px;
+                        text-align: center;
+                        padding: 40px;
+                    }
+
+                    .gallery-empty i {
+                        font-size: 3rem;
+                        opacity: 0.5;
+                    }
+
+                    .gallery-empty h3 {
+                        font-size: 1.3rem;
+                    }
+
+                    .gallery-empty p {
+                        font-size: 0.9rem;
+                        opacity: 0.7;
+                    }
+
+                    .gallery-empty .github-link {
+                        margin-top: 10px;
+                        padding: 10px 24px;
+                        background: linear-gradient(135deg, #d4a843 0%, #e8c96a 100%);
+                        color: #1e3a5f;
+                        text-decoration: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        transition: all 0.3s ease;
+                    }
+
+                    .gallery-empty .github-link:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 8px 25px rgba(212, 168, 67, 0.4);
+                    }
+
+                    .image-counter {
+                        position: absolute;
+                        top: 20px;
+                        right: 20px;
+                        z-index: 20;
+                        background: rgba(0,0,0,0.4);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(212,168,67,0.3);
+                        color: #d4a843;
+                        padding: 8px 16px;
+                        border-radius: 10px;
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                    }
+
                     @media (max-width: 768px) {
                         .gallery-slider {
                             height: 350px;
@@ -188,11 +233,7 @@
             createHTML() {
                 this.container.innerHTML = `
                     <div class="gallery-slider">
-                        <div class="slides-container">
-                            <div class="loading">
-                                <span>جاري تحميل الصور...</span>
-                            </div>
-                        </div>
+                        <div class="slides-container"></div>
                         <div class="dots"></div>
                         <div class="progress-bar" style="width: 0%"></div>
                     </div>
@@ -202,36 +243,76 @@
                 this.progressBar = this.container.querySelector('.progress-bar');
             }
 
-            async loadImages() {
+            showLoading() {
+                this.slidesContainer.innerHTML = `
+                    <div class="gallery-loading">
+                        <i class="fas fa-spinner"></i>
+                        <span>جاري تحميل الصور من GitHub...</span>
+                    </div>
+                `;
+            }
+
+            async fetchImagesFromGitHub() {
                 try {
-                    const imagesRef = ref(storage, this.folderPath);
-                    const result = await listAll(imagesRef);
-
-                    if (result.items.length === 0) {
-                        this.images = [];
-                        return;
-                    }
-
-                    const urlPromises = result.items.map(async (item) => {
-                        const url = await getDownloadURL(item);
-                        return {
-                            url: url,
-                            name: item.name.replace(/^\d+_/, '').replace(/\.[^/.]+$/, '')
-                        };
+                    const apiUrl = `https://api.github.com/repos/${this.githubUser}/${this.githubRepo}/contents/`;
+                    const response = await fetch(apiUrl, {
+                        headers: { 'Accept': 'application/vnd.github.v3+json' }
                     });
 
-                    this.images = await Promise.all(urlPromises);
-                    this.images.sort((a, b) => a.name.localeCompare(b.name));
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch repo contents');
+                    }
+
+                    const files = await response.json();
+                    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
+
+                    this.images = files
+                        .filter(file => {
+                            const ext = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
+                            return imageExtensions.includes(ext);
+                        })
+                        .map(file => ({
+                            url: `https://cdn.jsdelivr.net/gh/${this.githubUser}/${this.githubRepo}@${this.githubBranch}/${file.name}`,
+                            name: file.name,
+                            githubUrl: file.html_url
+                        }))
+                        .sort((a, b) => a.name.localeCompare(b.name));
 
                 } catch (error) {
-                    console.error('Error loading images:', error);
+                    console.error('Error fetching images:', error);
                     this.images = [];
+                }
+            }
+
+            async refreshImages() {
+                const oldCount = this.images.length;
+                await this.fetchImagesFromGitHub();
+
+                if (this.images.length !== oldCount) {
+                    // Images changed, refresh slider
+                    this.stopAutoPlay();
+                    this.slidesContainer.innerHTML = '';
+                    this.dotsContainer.innerHTML = '';
+                    const oldCounter = this.container.querySelector('.image-counter');
+                    if (oldCounter) oldCounter.remove();
+
+                    if (this.images.length > 0) {
+                        this.setupSlider();
+                        this.startAutoPlay();
+                    }
                 }
             }
 
             setupSlider() {
                 this.slidesContainer.innerHTML = '';
                 this.dotsContainer.innerHTML = '';
+
+                // Add counter
+                const counterDiv = document.createElement('div');
+                counterDiv.className = 'image-counter';
+                counterDiv.textContent = `${this.currentIndex + 1} / ${this.images.length}`;
+                this.container.querySelector('.gallery-slider').appendChild(counterDiv);
+                this.counterEl = counterDiv;
 
                 this.images.forEach((img, index) => {
                     const slide = document.createElement('img');
@@ -261,6 +342,10 @@
                 this.currentIndex = index;
                 this.slides[this.currentIndex].classList.add('active');
                 this.dots[this.currentIndex].classList.add('active');
+
+                if (this.counterEl) {
+                    this.counterEl.textContent = `${this.currentIndex + 1} / ${this.images.length}`;
+                }
 
                 if (this.autoPlay) {
                     this.stopAutoPlay();
@@ -297,30 +382,27 @@
                 this.progressBar.style.width = '0%';
             }
 
-            showPlaceholder() {
+            showEmptyState() {
                 this.slidesContainer.innerHTML = `
-                    <div style="
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        height: 100%;
-                        color: #d4a843;
-                        font-family: Cairo;
-                        gap: 15px;
-                    ">
-                        <i class="fas fa-images" style="font-size: 3rem; opacity: 0.5;"></i>
-                        <span style="font-size: 1.1rem;">لا توجد صور متاحة حالياً</span>
-                        <span style="font-size: 0.85rem; opacity: 0.7;">ارفع الصور من Firebase Console</span>
+                    <div class="gallery-empty">
+                        <i class="fas fa-images"></i>
+                        <h3>لا توجد صور في المستودع</h3>
+                        <p>أضف صوراً إلى مستودع GitHub لعرضها هنا</p>
+                        <a href="https://github.com/${this.githubUser}/${this.githubRepo}/upload/${this.githubBranch}" 
+                           class="github-link" target="_blank">
+                            <i class="fas fa-upload"></i>
+                            رفع صور جديدة
+                        </a>
                     </div>
                 `;
             }
         }
 
-        // Initialize gallery when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
-            const gallery = new GallerySlider('gallery-container', {
-                folderPath: 'images/',
+            window.publicSlider = new GitHubGallerySlider('gallery-container', {
+                githubUser: 'tasreehamnee-ux',
+                githubRepo: 'gallery-images',
+                githubBranch: 'main',
                 autoPlay: true,
                 interval: 5000,
                 animationSpeed: 800
@@ -1510,7 +1592,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo-section">
-                <img src="image.jpg" alt="شعار الوزارة" class="logo-icon" style="padding:0; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="image.jpeg" alt="شعار الوزارة" class="logo-icon" style="padding:0; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="logo-icon" style="display:none;">
                     <i class="fas fa-shield-alt"></i>
                 </div>
