@@ -9,7 +9,7 @@
 
     <!-- Firebase SDK -->
     <script>
-        // GitHub Gallery Slider - Fetches images dynamically from GitHub repo via jsDelivr CDN
+        // GitHub Gallery Slider - Improved with error handling and debugging
         class GitHubGallerySlider {
             constructor(containerId, options = {}) {
                 this.container = document.getElementById(containerId);
@@ -21,6 +21,7 @@
                 this.animationSpeed = options.animationSpeed || 800;
                 this.currentIndex = 0;
                 this.images = [];
+                this.loadedImages = 0;
                 this.progressTimer = null;
                 this.init();
             }
@@ -33,12 +34,14 @@
 
                 if (this.images.length > 0) {
                     this.setupSlider();
+                    // Wait for images to load before starting autoplay
+                    await this.preloadImages();
                     if (this.autoPlay) this.startAutoPlay();
                 } else {
                     this.showEmptyState();
                 }
 
-                // Refresh every 60 seconds to check for new images
+                // Refresh every 60 seconds
                 setInterval(() => this.refreshImages(), 60000);
             }
 
@@ -71,10 +74,39 @@
                         opacity: 0;
                         transition: opacity ${this.animationSpeed}ms ease-in-out;
                         object-fit: cover;
+                        background: linear-gradient(135deg, #1e3a5f 0%, #0d7377 100%);
                     }
 
                     .gallery-slider .slide.active {
                         opacity: 1;
+                        z-index: 2;
+                    }
+
+                    .gallery-slider .slide.loaded {
+                        background: none;
+                    }
+
+                    .gallery-slider .slide-error {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        color: #d4a843;
+                        font-family: 'Cairo', sans-serif;
+                        gap: 10px;
+                        text-align: center;
+                        padding: 20px;
+                    }
+
+                    .gallery-slider .slide-error i {
+                        font-size: 2rem;
+                        opacity: 0.5;
+                    }
+
+                    .gallery-slider .slide-error span {
+                        font-size: 0.9rem;
+                        opacity: 0.7;
                     }
 
                     .gallery-slider .dots {
@@ -207,6 +239,21 @@
                         font-weight: 600;
                     }
 
+                    .debug-info {
+                        position: absolute;
+                        top: 20px;
+                        left: 20px;
+                        z-index: 20;
+                        background: rgba(0,0,0,0.6);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(212,168,67,0.3);
+                        color: #d4a843;
+                        padding: 8px 16px;
+                        border-radius: 10px;
+                        font-size: 0.75rem;
+                        font-family: monospace;
+                    }
+
                     @media (max-width: 768px) {
                         .gallery-slider {
                             height: 350px;
@@ -255,15 +302,19 @@
             async fetchImagesFromGitHub() {
                 try {
                     const apiUrl = `https://api.github.com/repos/${this.githubUser}/${this.githubRepo}/contents/`;
+                    console.log('Fetching from:', apiUrl);
+
                     const response = await fetch(apiUrl, {
                         headers: { 'Accept': 'application/vnd.github.v3+json' }
                     });
 
                     if (!response.ok) {
-                        throw new Error('Failed to fetch repo contents');
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
 
                     const files = await response.json();
+                    console.log('Files found:', files.length);
+
                     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg'];
 
                     this.images = files
@@ -271,12 +322,18 @@
                             const ext = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
                             return imageExtensions.includes(ext);
                         })
-                        .map(file => ({
-                            url: `https://cdn.jsdelivr.net/gh/${this.githubUser}/${this.githubRepo}@${this.githubBranch}/${file.name}`,
-                            name: file.name,
-                            githubUrl: file.html_url
-                        }))
+                        .map(file => {
+                            const url = `https://raw.githubusercontent.com/${this.githubUser}/${this.githubRepo}/${this.githubBranch}/${file.name}`;
+                            console.log('Image URL:', url);
+                            return {
+                                url: url,
+                                name: file.name,
+                                githubUrl: file.html_url
+                            };
+                        })
                         .sort((a, b) => a.name.localeCompare(b.name));
+
+                    console.log('Total images:', this.images.length);
 
                 } catch (error) {
                     console.error('Error fetching images:', error);
@@ -284,20 +341,56 @@
                 }
             }
 
+            async preloadImages() {
+                const promises = this.images.map((img, index) => {
+                    return new Promise((resolve) => {
+                        const imageObj = new Image();
+                        imageObj.onload = () => {
+                            this.loadedImages++;
+                            const slide = this.slides[index];
+                            if (slide) {
+                                slide.classList.add('loaded');
+                            }
+                            console.log(`Loaded: ${img.name}`);
+                            resolve(true);
+                        };
+                        imageObj.onerror = () => {
+                            console.error(`Failed to load: ${img.name}`);
+                            const slide = this.slides[index];
+                            if (slide) {
+                                slide.innerHTML = `
+                                    <div class="slide-error">
+                                        <i class="fas fa-image"></i>
+                                        <span>فشل تحميل: ${img.name}</span>
+                                    </div>
+                                `;
+                            }
+                            resolve(false);
+                        };
+                        imageObj.src = img.url;
+                    });
+                });
+
+                await Promise.all(promises);
+                console.log(`Loaded ${this.loadedImages}/${this.images.length} images`);
+            }
+
             async refreshImages() {
                 const oldCount = this.images.length;
                 await this.fetchImagesFromGitHub();
 
                 if (this.images.length !== oldCount) {
-                    // Images changed, refresh slider
                     this.stopAutoPlay();
                     this.slidesContainer.innerHTML = '';
                     this.dotsContainer.innerHTML = '';
                     const oldCounter = this.container.querySelector('.image-counter');
+                    const oldDebug = this.container.querySelector('.debug-info');
                     if (oldCounter) oldCounter.remove();
+                    if (oldDebug) oldDebug.remove();
 
                     if (this.images.length > 0) {
                         this.setupSlider();
+                        await this.preloadImages();
                         this.startAutoPlay();
                     }
                 }
@@ -314,12 +407,38 @@
                 this.container.querySelector('.gallery-slider').appendChild(counterDiv);
                 this.counterEl = counterDiv;
 
+                // Add debug info
+                const debugDiv = document.createElement('div');
+                debugDiv.className = 'debug-info';
+                debugDiv.textContent = `Repo: ${this.githubUser}/${this.githubRepo}`;
+                this.container.querySelector('.gallery-slider').appendChild(debugDiv);
+
                 this.images.forEach((img, index) => {
                     const slide = document.createElement('img');
                     slide.className = `slide ${index === 0 ? 'active' : ''}`;
                     slide.src = img.url;
                     slide.alt = img.name;
                     slide.loading = index === 0 ? 'eager' : 'lazy';
+
+                    // Add error handling
+                    slide.onerror = () => {
+                        console.error(`Slide error: ${img.name}`);
+                        slide.style.display = 'none';
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'slide-error';
+                        errorDiv.innerHTML = `
+                            <i class="fas fa-image"></i>
+                            <span>فشل تحميل: ${img.name}</span>
+                            <small style="font-size:0.7rem;opacity:0.5">${img.url}</small>
+                        `;
+                        errorDiv.style.position = 'absolute';
+                        errorDiv.style.top = '0';
+                        errorDiv.style.left = '0';
+                        errorDiv.style.width = '100%';
+                        errorDiv.style.height = '100%';
+                        this.slidesContainer.appendChild(errorDiv);
+                    };
+
                     this.slidesContainer.appendChild(slide);
 
                     const dot = document.createElement('div');
@@ -1592,7 +1711,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo-section">
-                <img src="image.jpg" alt="شعار الوزارة" class="logo-icon" style="padding:0; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="image.jpeg" alt="شعار الوزارة" class="logo-icon" style="padding:0; object-fit:contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="logo-icon" style="display:none;">
                     <i class="fas fa-shield-alt"></i>
                 </div>
