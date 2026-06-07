@@ -15,7 +15,7 @@
                 this.container = document.getElementById(containerId);
                 this.githubUser = options.githubUser || 'tasreehamnee-ux';
                 this.githubRepo = options.githubRepo || 'gallery-images';
-                this.githubBranch = options.githubBranch || 'main';
+                this.githubBranch = options.githubBranch || 'mainhttps';
                 this.autoPlay = options.autoPlay !== false;
                 this.interval = options.interval || 5000;
                 this.animationSpeed = options.animationSpeed || 800;
@@ -239,22 +239,7 @@
                         font-weight: 600;
                     }
 
-                    .debug-info {
-                        position: absolute;
-                        top: 20px;
-                        left: 20px;
-                        z-index: 20;
-                        background: rgba(0,0,0,0.6);
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(212,168,67,0.3);
-                        color: #d4a843;
-                        padding: 8px 16px;
-                        border-radius: 10px;
-                        font-size: 0.75rem;
-                        font-family: monospace;
-                    }
-
-                    @media (max-width: 768px) {
+@media (max-width: 768px) {
                         .gallery-slider {
                             height: 350px;
                         }
@@ -407,11 +392,7 @@
                 this.container.querySelector('.gallery-slider').appendChild(counterDiv);
                 this.counterEl = counterDiv;
 
-                // Add debug info
-                const debugDiv = document.createElement('div');
-                debugDiv.className = 'debug-info';
-                debugDiv.textContent = `Repo: ${this.githubUser}/${this.githubRepo}`;
-                this.container.querySelector('.gallery-slider').appendChild(debugDiv);
+
 
                 this.images.forEach((img, index) => {
                     const slide = document.createElement('img');
@@ -521,7 +502,7 @@
             window.publicSlider = new GitHubGallerySlider('gallery-container', {
                 githubUser: 'tasreehamnee-ux',
                 githubRepo: 'gallery-images',
-                githubBranch: 'main',
+                githubBranch: 'mainhttps',
                 autoPlay: true,
                 interval: 5000,
                 animationSpeed: 800
@@ -1882,7 +1863,7 @@
             </div>
             <div class="depts-row" style="margin-top: 30px;">
                 <a href="https://tasreehamnee-ux.github.io/almt.com/" class="dept-card follow-up-dept big-followup" target="_blank" style="text-decoration: none; color: inherit; max-width: 420px; padding: 45px 35px;">
-                    <img src="image.jpg" alt="شعبة المتابعة" class="big-icon-wrapper" style="object-fit: contain; padding: 8px; background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 24px; width: 100px; height: 100px; display: block; margin: 0 auto 25px auto; box-shadow: 0 15px 40px rgba(231, 76, 60, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.2); transition: all 0.4s ease; animation: pulse-icon 3s ease-in-out infinite;">
+                    <img src="image.jpeg" alt="شعبة المتابعة" class="big-icon-wrapper" style="object-fit: contain; padding: 8px; background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 24px; width: 100px; height: 100px; display: block; margin: 0 auto 25px auto; box-shadow: 0 15px 40px rgba(231, 76, 60, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.2); transition: all 0.4s ease; animation: pulse-icon 3s ease-in-out infinite;">
                     <h3 style="font-size: 1.5rem; margin-bottom: 12px;">شعبة المتابعة</h3>
                     <p style="font-size: 0.95rem;">خاص بشعبة المتابعة - متابعة وتقييم كافة الطلبات والتصاريح الأمنية</p>
                     <div class="dept-line" style="width: 60px;"></div>
